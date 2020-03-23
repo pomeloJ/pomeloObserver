@@ -20,6 +20,11 @@ we don't say anymore
 //init
 let po = new pomeloObserver;
 
+//subscribe without event and name
+po.subscribe(function(data){
+	//event name will name default and random number for name
+});
+
 //subscribe a event and named "bill"
 po.subscribe('cartRefresh','bill',function(data){
 	//if cart refresh then call bill module
@@ -29,6 +34,9 @@ po.subscribe('cartRefresh','bill',function(data){
 po.subscribe('cart','cartView',function(data){
 	//if cart refresh then call cart View module
 });
+
+//trigger anything
+po.trigger();
 
 //trigger event
 po.trigger('cart');
