@@ -13,6 +13,7 @@ class pomeloObserver{
             let func = event;
             let randomNumber = Math.floor(Math.random() * (999999 - 0 + 1)) + 0;
             let name = "d"+randomNumber;
+
             event = "default";
             //if random name exist
             if(typeof this.observerList[event]==='undefined')this.observerList[event]={}
@@ -22,6 +23,7 @@ class pomeloObserver{
 
             return true;
         }
+       
 
         if ((Object.keys(this.observerList)).indexOf(event) === -1){
             this.observerList[event] = {};
@@ -47,7 +49,17 @@ class pomeloObserver{
     }
     //trigger observer event
     trigger = function (event, data) {
-        event = event || 'default';
+        if(typeof event === 'undefined'){
+            console.log(Object.keys(this.observerList));
+            let objectKeys = Object.keys(this.observerList);
+           for(let key in objectKeys){
+             let eventName = objectKeys[key];
+             console.log('eventName',eventName);
+             this.trigger(eventName,data);
+           }
+
+           return true;
+        }
         if (typeof this.observerList[event] === "undefined"){
             return false;
         }
