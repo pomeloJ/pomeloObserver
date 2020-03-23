@@ -9,6 +9,20 @@ class pomeloObserver{
     }
     //subscribe a task
     subscribe = function (event, name, func) {
+        if(typeof event=='function'){
+            let func = event;
+            let randomNumber = Math.floor(Math.random() * (999999 - 0 + 1)) + 0;
+            let name = "d"+randomNumber;
+            event = "default";
+            //if random name exist
+            if(typeof this.observerList[event]==='undefined')this.observerList[event]={}
+            if(typeof this.observerList[event][name] !=='undefined')return this.subscribe(event);
+
+            this.observerList[event][name] = func;
+
+            return true;
+        }
+
         if ((Object.keys(this.observerList)).indexOf(event) === -1){
             this.observerList[event] = {};
         }
@@ -16,7 +30,7 @@ class pomeloObserver{
         if (typeof this.observerList[event][name] === "undefined"){
             this.observerList[event][name] = func;
         }
-            
+
         return true;
     }
     //unsubscribe a task
@@ -33,6 +47,7 @@ class pomeloObserver{
     }
     //trigger observer event
     trigger = function (event, data) {
+        event = event || 'default';
         if (typeof this.observerList[event] === "undefined"){
             return false;
         }
